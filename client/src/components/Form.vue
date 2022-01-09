@@ -1,0 +1,38 @@
+<template>
+  <div>ユーザ名</div>
+  <div>
+    <input type="text" v-model="username" />
+  </div>
+
+  <div>メッセージ</div>
+  <div>
+    <textarea placeholder="投稿したいメッセージを入力" v-model="message" />
+  </div>
+
+  <div>
+    <button @click="submitMessage">投稿</button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { apiUrl } from '../const'
+
+const username = ref('')
+const message = ref('')
+
+const submitMessage = async ():Promise<void> => {
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json'
+  }
+  const body = JSON.stringify({username,message})
+
+  await fetch(`${apiUrl}/messages`, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers,
+    body
+  })
+}
+
+</script>
