@@ -45,7 +45,8 @@ serve(async (req: Request) => {
       case "POST": {
         // 新しいメッセージの投稿
         if (url.pathname === "/messages") {
-          const { username, message } = await req.json().catch(() => null);
+          const unparsedData = await req.json().catch(() => null);
+          const { username, message } = JSON.parse(unparsedData)
 
           await connection.queryObject`
             INSERT INTO messages (username, message) VALUES (${username}, ${message})
