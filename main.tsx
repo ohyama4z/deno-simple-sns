@@ -21,7 +21,7 @@ try {
 
 serve(async (req: Request) => {
   const url = new URL(req.url);
-  if (!(url.pathname === "/messages" || (url.pathname === "/messages/like" && url.search.startsWith("id=")))) {
+  if (!(url.pathname === "/messages" || (url.pathname === "/messages/like" && url.search.startsWith("?id=")))) {
     return new Response("Not Found", { status: 404 });
   }
 
