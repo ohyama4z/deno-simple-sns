@@ -1,4 +1,5 @@
 <template>
+<div>
   <div>ユーザ名</div>
   <div>
     <input type="text" v-model="username" />
@@ -12,6 +13,7 @@
   <div>
     <button @click="submitMessage">投稿</button>
   </div>
+</div>
 </template>
 
 <script setup lang="ts">

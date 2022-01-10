@@ -1,10 +1,12 @@
 <template>
 <div class="message">
-  <h2></h2>
-  <div>{{username}} &lt <strong>{{message}}</strong></div>
-  <div>
-    <label>LIKEされた数 : {{likes}} </label>
-    <button @click="likeMessage">+1 LIKE</button>
+  <div><strong>{{username}}</strong> <small>{{createdAt}}</small></div>
+  <div class="messageValue">
+  <div>{{message}}</div>
+  <div class="like">
+    <span>LIKEされた数 : {{likes}} </span>
+    <button @click="likeMessage" class="likeButton">+1 LIKE</button>
+  </div>
   </div>
 </div>
 </template>
@@ -17,6 +19,7 @@ interface Props {
   username:string
   message:string
   likes: number
+  createdAt: string
 }
 const props = defineProps<Props>()
 
@@ -36,3 +39,27 @@ const likeMessage = async () => {
   emit("like")
 }
 </script>
+
+<style scoped>
+.message {
+  display: table;
+  background-color: white;
+  border: 1px dashed;
+  margin-top: 10px;
+  padding-bottom: 1em;
+  padding-right: 3em;
+  padding-left: 0.5em;
+}
+
+.like {
+  font-size: 0.5em;
+}
+.likeButton {
+  margin-left: 1em;
+}
+
+.messageValue {
+  margin-top: 1em;
+  margin-left: 3em;
+}
+</style>

@@ -1,17 +1,19 @@
 <template>
-<div>
-  <Form @submit="fetchMessages" />
-  <div :key="key">
+<div class="main">
+  <Header />
+  <div class="messages">
     <Message 
-    v-for="{id, username, message, likes} in messages"
+    v-for="{id, username, message, likes, created_at} in messages"
     :key="id"
     :id="id"
     :username="username"
     :message="message"
     :likes="likes"
+    :createdAt="created_at"
     @like="fetchMessages"
     />
   </div>
+  <Form @submit="fetchMessages" />
 </div>
 </template>
 
@@ -21,9 +23,9 @@ import Message_t from './@types/Message'
 import { apiUrl } from './const.dev'
 import Form from './components/Form.vue'
 import Message from './components/Message.vue'
+import Header from './components/Header.vue'
 
 const messages = ref<Message_t[]>([])
-const key = ref(0)
 
 const fetchMessages = async () => {
   const unparsedData = await fetch(`${apiUrl}/messages`, {
@@ -40,3 +42,18 @@ onMounted(async () => {
   await fetchMessages()
 })
 </script>
+
+<style scoped>
+.main {
+  width: 100vw;
+  margin-left: 10vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.messages {
+  margin-bottom: 1em;
+}
+
+</style>
