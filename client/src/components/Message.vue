@@ -6,6 +6,7 @@
   <div class="like">
     <span>LIKEされた数 : {{likes}} </span>
     <button @click="likeMessage" class="likeButton">+1 LIKE</button>
+    <button @click="deleteMessage" class="deleteButton">Delete!</button>
   </div>
   </div>
 </div>
@@ -25,6 +26,7 @@ const props = defineProps<Props>()
 
 interface Emits {
   (e: "like"): void
+  (e: "delete"): void
 }
 const emit = defineEmits<Emits>()
 
@@ -37,6 +39,16 @@ const likeMessage = async () => {
   })
 
   emit("like")
+}
+
+const deleteMessage = async () => {
+
+  await fetch(`${apiUrl}/messages/delete?id=${props.id}`, {
+    method: 'POST',
+    mode: 'no-cors',
+  })
+  
+  emit("delete")
 }
 </script>
 
@@ -57,7 +69,12 @@ const likeMessage = async () => {
 .likeButton {
   margin-left: 1em;
 }
-
+.delete {
+  font-size: 0.5em;
+}
+.deleteButton {
+  margin-left: 1em;
+}
 .messageValue {
   margin-top: 1em;
   margin-left: 3em;
