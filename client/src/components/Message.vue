@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {apiUrl} from "../const.dev"
+import {apiUrl} from "../const.production"
 
 interface Props {
   id:number

@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { apiUrl } from '../const.dev'
+import { apiUrl } from '../const.production'
 
 const username = ref('')
 const message = ref('')

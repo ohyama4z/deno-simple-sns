@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import Message_t from './@types/Message'
-import { apiUrl } from './const.dev'
+import { apiUrl } from './const.production'
 import Form from './components/Form.vue'
 import Message from './components/Message.vue'
 import Header from './components/Header.vue'
