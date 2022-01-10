@@ -16,16 +16,21 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { apiUrl } from '../const'
+import { apiUrl } from '../const.dev'
 
 const username = ref('')
 const message = ref('')
+
+interface Emits {
+  (e: "submit"): void
+}
+const emit = defineEmits<Emits>()
 
 const submitMessage = async ():Promise<void> => {
   const headers: HeadersInit = {
     'Content-Type': 'application/json'
   }
-  const body = JSON.stringify({username,message})
+  const body = JSON.stringify({username:username.value, message:message.value})
 
   await fetch(`${apiUrl}/messages`, {
     method: 'POST',
@@ -33,6 +38,8 @@ const submitMessage = async ():Promise<void> => {
     headers,
     body
   })
+
+  emit("submit")
 }
 
 </script>

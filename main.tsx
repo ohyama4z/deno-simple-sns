@@ -5,6 +5,7 @@ const databaseUrl = Deno.env.get("DATABASE_URL")!;
 
 const pool = new postgres.Pool(databaseUrl, 3, true);
 const connection = await pool.connect();
+
 try {
   await connection.queryObject`
     CREATE TABLE IF NOT EXISTS messages (
@@ -18,6 +19,8 @@ try {
 } finally {
   connection.release();
 }
+
+console.log("listening localhost:8000")
 
 serve(async (req: Request) => {
   const url = new URL(req.url);
@@ -38,15 +41,14 @@ serve(async (req: Request) => {
         const body = JSON.stringify(result.rows, null, 2);
 
         return new Response(body, {
-          headers: { "content-type": "application/json" },
+          headers: { "content-type": "application/json", "Access-Control-Allow-Origin": "*" },
         });
       }
 
       case "POST": {
         // 新しいメッセージの投稿
         if (url.pathname === "/messages") {
-          const unparsedData = await req.json().catch(() => null);
-          const { username, message } = JSON.parse(unparsedData)
+          const { username, message } = await req.json().catch(() => null);
 
           await connection.queryObject`
             INSERT INTO messages (username, message) VALUES (${username}, ${message})
