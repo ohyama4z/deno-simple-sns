@@ -24,7 +24,7 @@ console.log("listening localhost:8000")
 
 serve(async (req: Request) => {
   const url = new URL(req.url);
-  if (!(url.pathname === "/messages" || (url.pathname === "/messages/like" && url.search.startsWith("?id=")))) {
+  if (!(url.pathname === "/messages" || (url.pathname === "/messages/like" && url.search.startsWith("?id=")) || (url.pathname === "/messages/delete" && url.search.startsWith("?id=")))) {
     return new Response("Not Found", { status: 404 });
   }
 
@@ -68,6 +68,17 @@ serve(async (req: Request) => {
 
           return new Response("", { status: 201 });
         }
+        
+        // メッセージにdeleteをつける
+        if (url.pathname === "/messages/delete") {
+          const params = new URLSearchParams(url.search)
+          const id = params.get("id")
+          
+          await connection.queryObject`
+            DELETE FROM messages WHERE id=${id}
+          `
+          
+          return new Response("", { status: 201 });
       }
       default:
         return new Response("Method Not Allowed", { status: 405 });
