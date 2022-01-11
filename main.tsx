@@ -54,7 +54,7 @@ serve(async (req: Request) => {
             INSERT INTO messages (username, message) VALUES (${username}, ${message})
           `;
 
-          return new Response("", { status: 201 });
+          return new Response("", { status: 201, headers: { "Access-Control-Allow-Origin": "*" } });
         }
 
         // メッセージにlikeをつける
@@ -66,7 +66,7 @@ serve(async (req: Request) => {
             UPDATE messages SET likes=likes+1 WHERE id=${id}
           `
 
-          return new Response("", { status: 201 });
+          return new Response("", { status: 201, headers: { "Access-Control-Allow-Origin": "*" } });
         }
       }
       default:

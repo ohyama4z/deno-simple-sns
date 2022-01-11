@@ -29,15 +29,11 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 const submitMessage = async ():Promise<void> => {
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json'
-  }
   const body = JSON.stringify({username:username.value, message:message.value})
 
   await fetch(`${apiUrl}/messages`, {
     method: 'POST',
-    mode: 'no-cors',
-    headers,
+    mode: 'cors',
     body
   })
 

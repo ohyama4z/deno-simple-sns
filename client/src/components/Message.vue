@@ -33,7 +33,7 @@ const likeMessage = async () => {
 
   await fetch(`${apiUrl}/messages/like?id=${props.id}`, {
     method: 'POST',
-    mode: 'no-cors',
+    mode: 'cors',
   })
 
   emit("like")
