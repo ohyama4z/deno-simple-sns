@@ -1,1 +1,1 @@
-export const apiUrl = "https://deno-simple-sns.deno.dev"
+export const apiUrl = "deno-simple-sns-4tg7zmbcjpag.deno.dev"
